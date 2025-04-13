@@ -1,10 +1,3 @@
-
-declare global {
-  interface Window {
-    deferredPrompt?: any;
-  }
-}
-
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/features/store';
 import { toggleCart } from '@/features/cartSlice';
@@ -13,12 +6,27 @@ import { ShoppingCart, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import ThemeToggle from './ThemeToggle';
+import { useEffect, useState } from 'react';
 
 export const Navbar = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state: RootState) => state.cart.items);
 
   const cartItemsCount = cart.reduce((total, item) => total + item.quantity, 0);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: any) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md">
@@ -50,16 +58,17 @@ export const Navbar = () => {
             variant="outline"
             size="icon"
             className="relative rounded-full"
+            disabled={!deferredPrompt}
             onClick={() => {
-              if (window.deferredPrompt) {
-                window.deferredPrompt.prompt();
-                window.deferredPrompt.userChoice.then((choiceResult) => {
+              if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult: any) => {
                   console.log(choiceResult.outcome);
-                  window.deferredPrompt = null;
+                  setDeferredPrompt(null);
                 });
               }
             }}
-            aria-label="Open cart"
+            aria-label="Install App"
           >
             <Download className="h-5 w-5" />
           </Button>

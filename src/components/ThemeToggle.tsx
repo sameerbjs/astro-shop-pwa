@@ -11,7 +11,6 @@ export const ThemeToggle = () => {
   const theme = useSelector((state: RootState) => state.theme.theme);
   
   useEffect(() => {
-    // Apply theme on initial render
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
