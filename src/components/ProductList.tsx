@@ -8,7 +8,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export const ProductList = () => {
   const dispatch = useDispatch();
-  const { products, status, error } = useSelector((state: RootState) => state.products);
+  const { filteredProducts, status, error } = useSelector((state: RootState) => state.products);
   
   useEffect(() => {
     if (status === 'idle') {
@@ -34,13 +34,13 @@ export const ProductList = () => {
     return <div className="text-destructive text-center my-8">Error: {error}</div>;
   }
   
-  if (products.length === 0) {
+  if (filteredProducts.length === 0) {
     return <div className="text-center my-8">No products found</div>;
   }
   
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 animate-fade-in">
-      {products.map((product) => (
+      {filteredProducts.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
     </div>

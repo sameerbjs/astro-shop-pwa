@@ -16,8 +16,10 @@ export interface Product {
 
 interface ProductState {
   products: Product[];
+  filteredProducts: Product[];
   categories: string[];
   selectedCategory: string | null;
+  searchQuery: string;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
   selectedProduct: Product | null;
@@ -25,8 +27,10 @@ interface ProductState {
 
 const initialState: ProductState = {
   products: [],
+  filteredProducts: [],
   categories: [],
   selectedCategory: null,
+  searchQuery: '',
   status: 'idle',
   error: null,
   selectedProduct: null,
@@ -64,9 +68,14 @@ export const productSlice = createSlice({
   reducers: {
     setSelectedCategory: (state, action) => {
       state.selectedCategory = action.payload;
+      state.filteredProducts = filterProducts(state);
     },
     clearSelectedProduct: (state) => {
       state.selectedProduct = null;
+    },
+    setSearchQuery: (state, action) => {
+      state.searchQuery = action.payload;
+      state.filteredProducts = filterProducts(state);
     },
   },
   extraReducers: (builder) => {
@@ -78,6 +87,7 @@ export const productSlice = createSlice({
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.products = action.payload;
+        state.filteredProducts = action.payload;
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.status = 'failed';
@@ -96,6 +106,7 @@ export const productSlice = createSlice({
       .addCase(fetchProductsByCategory.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.products = action.payload;
+        state.filteredProducts = filterProducts(state);
       })
       .addCase(fetchProductsByCategory.rejected, (state, action) => {
         state.status = 'failed';
@@ -117,6 +128,28 @@ export const productSlice = createSlice({
   },
 });
 
-export const { setSelectedCategory, clearSelectedProduct } = productSlice.actions;
+// Helper function to filter products based on category and search query
+const filterProducts = (state: ProductState): Product[] => {
+  let result = state.products;
+  
+  // Filter by category if selected
+  if (state.selectedCategory) {
+    result = result.filter(product => product.category === state.selectedCategory);
+  }
+  
+  // Filter by search query if present
+  if (state.searchQuery.trim()) {
+    const query = state.searchQuery.toLowerCase().trim();
+    result = result.filter(product => 
+      product.title.toLowerCase().includes(query) || 
+      product.description.toLowerCase().includes(query) ||
+      product.category.toLowerCase().includes(query)
+    );
+  }
+  
+  return result;
+};
+
+export const { setSelectedCategory, clearSelectedProduct, setSearchQuery } = productSlice.actions;
 
 export default productSlice.reducer;
