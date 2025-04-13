@@ -1,4 +1,5 @@
 
+import React from 'react'; // Add this explicit import
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -54,14 +55,17 @@ const AppContent = () => {
   );
 };
 
-const App = () => (
-  <Provider store={store}>
-    <HelmetProvider>
-      <BrowserRouter>
-        <AppContent />
-      </BrowserRouter>
-    </HelmetProvider>
-  </Provider>
+// Define the App component as a proper React function component
+const App: React.FC = () => (
+  <React.StrictMode>
+    <Provider store={store}>
+      <HelmetProvider>
+        <BrowserRouter>
+          <AppContent />
+        </BrowserRouter>
+      </HelmetProvider>
+    </Provider>
+  </React.StrictMode>
 );
 
 export default App;
