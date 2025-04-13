@@ -1,6 +1,6 @@
-# 🛍️ ShopEase - Futuristic E-commerce PWA
+# 🛍️ AstroShop - Futuristic E-commerce PWA
 
-ShopEase is a modern, futuristic Progressive Web App (PWA) e-commerce store built with **React**, **TypeScript**, **Vite**, and **Tailwind CSS**, using the Fake Store API. It features offline support, service workers, and installability — delivering a native-like experience right from the browser.
+AstroShop is a modern, futuristic Progressive Web App (PWA) e-commerce store built with **React**, **TypeScript**, **Vite**, and **Tailwind CSS**, using the Fake Store API. It features offline support, service workers, and installability — delivering a native-like experience right from the browser.
 ---
 
 ## 🚀 Features
@@ -37,5 +37,5 @@ ShopEase is a modern, futuristic Progressive Web App (PWA) e-commerce store buil
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/sameerbjs/shopease-pwa.git
+git clone https://github.com/sameerbjs/astro-shop-pwa.git
 cd shopease-pwa
