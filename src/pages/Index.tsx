@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import ProductList from '@/components/ProductList';
 import CategoryFilter from '@/components/CategoryFilter';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 const Index = () => {
   useEffect(() => {
