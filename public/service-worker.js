@@ -2,8 +2,6 @@ const CACHE_NAME = 'app-cache-v1';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
-  '/styles.css',
-  '/main.js',
   '/favicon.ico',
   // Add any other assets you want to precache here
 ];
