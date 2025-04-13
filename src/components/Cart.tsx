@@ -2,12 +2,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/features/store';
 import { toggleCart, removeFromCart, updateQuantity, clearCart } from '@/features/cartSlice';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { ShoppingCart, Trash2, X, Plus, Minus } from 'lucide-react';
-import { useState } from 'react';
+import { ShoppingCart, Trash2, Plus, Minus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
+import { sendNotification } from '@/lib/utils';
 
 export const Cart = () => {
   const dispatch = useDispatch();

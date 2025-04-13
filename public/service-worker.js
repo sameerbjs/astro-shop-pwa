@@ -3,10 +3,8 @@ const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/favicon.ico',
-  // Add other assets you want to precache
 ];
 
-// Install event — cache essential static files
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
